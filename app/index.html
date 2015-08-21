@@ -1,9 +1,44 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-  </body>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pomodoro rocks</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="settings">Settings</div>
+<div class="close">Close</div>
+<div id="main" class="container-fluid">
+
+  <div id="timer">
+    <h1>Timer</h1>
+  </div>
+
+  <div class="row buttons">
+    <div class="col-xs-3">
+      <div class="button-action" data-action="start">
+        <span class="button-icon"></span>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="button-action" data-action="pause">
+        <span class="button-icon"></span>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="button-action" data-action="stop">
+        <span class="button-icon"></span>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="button-action" data-action="reset">
+        <span class="button-icon"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/index.js"></script>
+</body>
 </html>
