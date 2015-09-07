@@ -1,5 +1,7 @@
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
+var globalShortcut = require('global-shortcut');
+var ipc = require('ipc');
 
 // Report crashes to our server.
 require('crash-reporter').start();
@@ -14,8 +16,6 @@ app.on('window-all-closed', function() {
     app.quit();
   }
 });
-
-var ipc = require('ipc');
 
 ipc.on('close-main-window', function () {
       app.quit();
