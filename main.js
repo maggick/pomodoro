@@ -15,6 +15,12 @@ app.on('window-all-closed', function() {
   }
 });
 
+var ipc = require('ipc');
+
+ipc.on('close-main-window', function () {
+      app.quit();
+});
+
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', function() {

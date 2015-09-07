@@ -4,6 +4,13 @@ var nodeTimers = require('node-timers'); //or
 var simple = nodeTimers.timer({pollInterval: 1000, finishTime: 10000});
 //var simple = nodeTimers.countdown({pollInterval: 1000, startTime: 1500000});
 
+var ipc = require('ipc');
+
+var closeEl = document.querySelector('.close');
+closeEl.addEventListener('click', function () {
+      ipc.send('close-main-window');
+});
+
 var actionButtons = document.querySelectorAll('.button-action');
 
 for (var i = 0; i < actionButtons.length; i++) {
