@@ -11,6 +11,11 @@ closeEl.addEventListener('click', function () {
       ipc.send('close-main-window');
 });
 
+var settingsEl = document.querySelector('.settings');
+settingsEl.addEventListener('click', function () {
+      ipc.send('open-settings-window');
+});
+
 var actionButtons = document.querySelectorAll('.button-action');
 
 for (var i = 0; i < actionButtons.length; i++) {

@@ -2,6 +2,7 @@ var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var globalShortcut = require('global-shortcut');
 var ipc = require('ipc');
+var settingsWindow = null;
 
 // Report crashes to our server.
 require('crash-reporter').start();
@@ -14,6 +15,31 @@ var mainWindow = null;
 app.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
     app.quit();
+  }
+});
+
+ipc.on('open-settings-window', function () {
+    if (settingsWindow) {
+        return;
+    }
+
+    settingsWindow = new BrowserWindow({
+        frame: false,
+        height: 200,
+        resizable: false,
+        width: 200
+    });
+
+    settingsWindow.loadUrl('file://' + __dirname + '/app/settings.html');
+
+    settingsWindow.on('closed', function () {
+        settingsWindow = null;
+    });
+});
+
+ipc.on('close-settings-window', function () {
+  if (settingsWindow) {
+    settingsWindow.close();
   }
 });
 
