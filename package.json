@@ -1,5 +1,8 @@
 {
-  "name"    : "Pomodoro rocks",
-  "version" : "0.1.0",
-  "main"    : "./main.js"
+  "name": "Pomodoro_rocks",
+  "version": "0.1.0",
+  "main": "./main.js",
+  "dependencies": {
+    "nconf": "^0.7.2"
+  }
 }
