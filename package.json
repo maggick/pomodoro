@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "main": "./main.js",
   "dependencies": {
-    "nconf": "^0.7.2"
+    "nconf": "^0.7.2",
+    "node-timers": "0.0.1"
   }
 }
