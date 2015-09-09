@@ -1,6 +1,6 @@
 'use strict';
 
-var nconf = require('nconf').file({file: getUserHome() + '/pomodoro_rocks_config.json'});
+var nconf = require('nconf').file({file: getUserHome() + '/.pomodoro_rocks_config.json'});
 
 function saveSettings(settingKey, settingValue) {
     nconf.set(settingKey, settingValue);
