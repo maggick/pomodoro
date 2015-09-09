@@ -1,6 +1,6 @@
 html,
 body {
-    background: #044D7F;
+    background: #111;
     overflow: hidden;
     -webkit-app-region: drag;
     -webkit-user-select: none;
@@ -21,6 +21,7 @@ label {
 
 input {
     padding: 10px;
+    background-color : #111;
 }
 
 .close {
