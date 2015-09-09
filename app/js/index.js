@@ -8,58 +8,58 @@ var ipc = require('ipc');
 
 var closeEl = document.querySelector('.close');
 closeEl.addEventListener('click', function () {
-      ipc.send('close-main-window');
+  ipc.send('close-main-window');
 });
 
 var settingsEl = document.querySelector('.settings');
 settingsEl.addEventListener('click', function () {
-      ipc.send('open-settings-window');
+  ipc.send('open-settings-window');
 });
 
 var actionButtons = document.querySelectorAll('.button-action');
 
 for (var i = 0; i < actionButtons.length; i++) {
-    var actionButton = actionButtons[i];
-    var actionName = actionButton.attributes['data-action'].value;
+  var actionButton = actionButtons[i];
+  var actionName = actionButton.attributes['data-action'].value;
 
-    prepareButton(actionButton, actionName);
+  prepareButton(actionButton, actionName);
 }
 
 function prepareButton(buttonEl, actionName) {
-    buttonEl.querySelector('span').style.backgroundImage = 'url("img/icons/' + actionName + '.png")';
+  buttonEl.querySelector('span').style.backgroundImage = 'url("img/icons/' + actionName + '.png")';
 
   switch(actionName) {
-      case 'start':
-        buttonEl.addEventListener('click', function () {
-          simple.start();
-        });
-        break;
-      case 'pause':
-        buttonEl.addEventListener('click', function () {
-          simple.stop();
-        });
-          break;
-      case 'stop':
-        buttonEl.addEventListener('click', function () {
-          simple.stop();
-        });
-          break;
-      case 'reset':
-        buttonEl.addEventListener('click', function () {
-          simple.reset();
-        });
-          break;
-      default:
-          console.log('what?');
+    case 'start':
+      buttonEl.addEventListener('click', function () {
+        simple.start();
+      });
+      break;
+    case 'pause':
+      buttonEl.addEventListener('click', function () {
+        simple.stop();
+      });
+      break;
+    case 'stop':
+      buttonEl.addEventListener('click', function () {
+        simple.stop();
+      });
+      break;
+    case 'reset':
+      buttonEl.addEventListener('click', function () {
+        simple.reset();
+      });
+      break;
+    default:
+      console.log('what?');
   }
-    buttonEl.addEventListener('click', function () {
-        console.log(simple.time());
-    });
+  buttonEl.addEventListener('click', function () {
+    console.log(simple.time());
+  });
 }
 
 simple.on("poll", function (time) {
-      console.log(time);
-      var timer_text = document.querySelectorAll('.timer');
-      //timer_text[0].querySelector('span') = 'url("img/icons/pause.png")';
-      document.getElementById("timer").innerHTML = simple.time()/1000;
+  console.log(time);
+  var timer_text = document.querySelectorAll('.timer');
+  //timer_text[0].querySelector('span') = 'url("img/icons/pause.png")';
+  document.getElementById("timer").innerHTML = simple.time()/1000;
 });

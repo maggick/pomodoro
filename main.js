@@ -20,22 +20,22 @@ app.on('window-all-closed', function() {
 });
 
 ipc.on('open-settings-window', function () {
-    if (settingsWindow) {
-        return;
-    }
+  if (settingsWindow) {
+    return;
+  }
 
-    settingsWindow = new BrowserWindow({
-        frame: false,
-        height: 200,
-        resizable: false,
-        width: 200
-    });
+  settingsWindow = new BrowserWindow({
+    frame: false,
+    height: 200,
+    resizable: false,
+    width: 200
+  });
 
-    settingsWindow.loadUrl('file://' + __dirname + '/app/settings.html');
+  settingsWindow.loadUrl('file://' + __dirname + '/app/settings.html');
 
-    settingsWindow.on('closed', function () {
-        settingsWindow = null;
-    });
+  settingsWindow.on('closed', function () {
+    settingsWindow = null;
+  });
 });
 
 ipc.on('close-settings-window', function () {
@@ -45,7 +45,7 @@ ipc.on('close-settings-window', function () {
 });
 
 ipc.on('close-main-window', function () {
-      app.quit();
+  app.quit();
 });
 
 // This method will be called when Electron has done everything
@@ -76,15 +76,15 @@ app.on('ready', function() {
 
 
 function setGlobalShortcuts() {
-    globalShortcut.unregisterAll();
+  globalShortcut.unregisterAll();
 
-    var shortcutKeysSetting = configuration.readSettings('shortcutKeys');
-    var shortcutPrefix = shortcutKeysSetting.length === 0 ? '' : shortcutKeysSetting.join('+') + '+';
+  var shortcutKeysSetting = configuration.readSettings('shortcutKeys');
+  var shortcutPrefix = shortcutKeysSetting.length === 0 ? '' : shortcutKeysSetting.join('+') + '+';
 
-    globalShortcut.register(shortcutPrefix + '1', function () {
-        mainWindow.webContents.send('global-shortcut', 0);
-    });
-    globalShortcut.register(shortcutPrefix + '2', function () {
-        mainWindow.webContents.send('global-shortcut', 1);
-    });
+  globalShortcut.register(shortcutPrefix + '1', function () {
+    mainWindow.webContents.send('global-shortcut', 0);
+  });
+  globalShortcut.register(shortcutPrefix + '2', function () {
+    mainWindow.webContents.send('global-shortcut', 1);
+  });
 }
