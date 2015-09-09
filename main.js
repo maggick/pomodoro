@@ -2,6 +2,7 @@ var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var globalShortcut = require('global-shortcut');
 var ipc = require('ipc');
+var configuration = require('./configuration');
 var settingsWindow = null;
 
 // Report crashes to our server.
@@ -50,6 +51,11 @@ ipc.on('close-main-window', function () {
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', function() {
+  if (!configuration.readSettings('shortcutKeys')) {
+    configuration.saveSettings('shortcutKeys', ['ctrl', 'shift']);
+  }
+  setGlobalShortcuts();
+
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 300, height: 300});
 
@@ -67,3 +73,18 @@ app.on('ready', function() {
     mainWindow = null;
   });
 });
+
+
+function setGlobalShortcuts() {
+    globalShortcut.unregisterAll();
+
+    var shortcutKeysSetting = configuration.readSettings('shortcutKeys');
+    var shortcutPrefix = shortcutKeysSetting.length === 0 ? '' : shortcutKeysSetting.join('+') + '+';
+
+    globalShortcut.register(shortcutPrefix + '1', function () {
+        mainWindow.webContents.send('global-shortcut', 0);
+    });
+    globalShortcut.register(shortcutPrefix + '2', function () {
+        mainWindow.webContents.send('global-shortcut', 1);
+    });
+}
