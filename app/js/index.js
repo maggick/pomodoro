@@ -61,5 +61,5 @@ simple.on("poll", function (time) {
   console.log(time);
   var timer_text = document.querySelectorAll('.timer');
   //timer_text[0].querySelector('span') = 'url("img/icons/pause.png")';
-  document.getElementById("timer").innerHTML = simple.time()/1000;
+  document.getElementById("timer").innerHTML = Math.round(simple.time()/1000);
 });
