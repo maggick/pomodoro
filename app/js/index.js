@@ -1,8 +1,7 @@
 'use strict';
 
 var nodeTimers = require('node-timers'); //or
-var simple = nodeTimers.timer({pollInterval: 1000, finishTime: 10000});
-//var simple = nodeTimers.countdown({pollInterval: 1000, startTime: 1500000});
+var simple = nodeTimers.countdown({pollInterval: 1000, startTime: 1500000});
 
 var ipc = require('ipc');
 
