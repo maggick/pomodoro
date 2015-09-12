@@ -55,6 +55,14 @@ function prepareButton(buttonEl, actionName) {
 
 simple.on("poll", function (time) {
   var timer_text = document.querySelectorAll('.timer');
-  //timer_text[0].querySelector('span') = 'url("img/icons/pause.png")';
-  document.getElementById("timer").innerHTML = Math.round(simple.time()/1000);
+  document.getElementById("timer").innerHTML = displayMs(simple.time());
 });
+
+function displayMs(time){
+  var m = Math.floor((time/60000));
+  var s = ((time % 60000)/1000).toFixed(0);
+  if (s === 60){
+    s = 0
+  }
+  return m + ":" + (s < 10 ? '0' : '') + s;
+}
