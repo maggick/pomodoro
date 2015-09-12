@@ -6,6 +6,7 @@ body {
     width: 368px;
     -webkit-app-region: drag;
     -webkit-user-select: none;
+    color: #fff;
 }
 
 #main {
@@ -15,7 +16,6 @@ body {
 }
 
 #main h1 {
-    color: #ccc;
     padding-right: 6px;
     padding-top: 5px;
     text-align: right;
@@ -25,6 +25,11 @@ body {
 #main h1 img {
     height: 31px;
     width: 195px;
+}
+
+.timer{
+    font-size: xx-large;
+    font-weight: bold;
 }
 
 .buttons {
