@@ -1,9 +1,11 @@
 'use strict';
 
-var nodeTimers = require('node-timers'); //or
+var nodeTimers = require('node-timers');
 var simple = nodeTimers.countdown({pollInterval: 1000, startTime: 1500000});
 
 var ipc = require('ipc');
+
+var step = 0;
 
 var closeEl = document.querySelector('.close');
 closeEl.addEventListener('click', function () {
@@ -56,6 +58,10 @@ function prepareButton(buttonEl, actionName) {
 simple.on("poll", function (time) {
   var timer_text = document.querySelectorAll('.timer');
   document.getElementById("timer").innerHTML = displayMs(simple.time());
+});
+
+simple.on("done", function(time){
+  console.log("done");
 });
 
 function displayMs(time){
