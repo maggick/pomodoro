@@ -18,8 +18,7 @@ body {
 #main h1 {
     padding-right: 6px;
     padding-top: 5px;
-    text-align: right;
-    text-indent: -10000px;
+    text-align: left;
 }
 
 #main h1 img {
@@ -30,6 +29,7 @@ body {
 .timer{
     font-size: xx-large;
     font-weight: bold;
+    text-align: center;
 }
 
 .buttons {
