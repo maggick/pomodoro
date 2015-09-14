@@ -62,6 +62,16 @@ simple.on("poll", function (time) {
 
 simple.on("done", function(time){
   console.log("done");
+  step +=1;
+  console.log(step%2);
+  simple.reset();
+  if (step % 2 == 0){
+    simple.time(1500000);
+  }
+  else{
+    simple.time(300000);
+  }
+  document.getElementById("timer").innerHTML = displayMs(simple.time());
 });
 
 function displayMs(time){
