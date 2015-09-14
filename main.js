@@ -54,7 +54,10 @@ app.on('ready', function() {
   if (!configuration.readSettings('shortcutKeys')) {
     configuration.saveSettings('shortcutKeys', ['ctrl', 'shift']);
   }
-  setGlobalShortcuts();
+  if (!configuration.readSettings('TimerDuration')) {
+    configuration.saveSettings('TimerDuration', [1500000, 300000, 900000]);
+  }
+  setConfiguration();
 
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 300, height: 300});
@@ -73,6 +76,11 @@ app.on('ready', function() {
     mainWindow = null;
   });
 });
+
+function setConfiguration(){
+  setGlobalShortcuts();
+  //setDuration();
+}
 
 
 function setGlobalShortcuts() {
