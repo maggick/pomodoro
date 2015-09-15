@@ -10,6 +10,8 @@ var longtBreakTimer = timerDurations[2];
 var nodeTimers = require('node-timers');
 var simple = nodeTimers.countdown({pollInterval: 1000, startTime: pomodoroTimer});
 
+document.getElementById("timer").innerHTML = displayMs(pomodoroTimer);
+
 var ipc = require('ipc');
 
 var step = 0;
