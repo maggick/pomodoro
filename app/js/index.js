@@ -1,7 +1,14 @@
 'use strict';
 
+var configuration = require('../configuration.js');
+var timerDurations = configuration.readSettings('TimerDuration');
+
+var pomodoroTimer = timerDurations[0];
+var shortBreakTimer = timerDurations[1];
+var longtBreakTimer = timerDurations[2];
+
 var nodeTimers = require('node-timers');
-var simple = nodeTimers.countdown({pollInterval: 1000, startTime: 1500000});
+var simple = nodeTimers.countdown({pollInterval: 1000, startTime: pomodoroTimer});
 
 var ipc = require('ipc');
 
@@ -66,10 +73,10 @@ simple.on("done", function(time){
   console.log(step%2);
   simple.reset();
   if (step % 2 == 0){
-    simple.time(1500000);
+    simple.time(pomodoroTimer);
   }
   else{
-    simple.time(300000);
+    simple.time(shortBreakTimer);
   }
   document.getElementById("timer").innerHTML = displayMs(simple.time());
 });
