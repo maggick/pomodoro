@@ -71,7 +71,6 @@ function prepareButton(buttonEl, actionName) {
 
 // at each poll from the timer we display the remaining time
 simple.on("poll", function (time) {
-  var timer_text = document.querySelectorAll('.timer');
   document.getElementById("timer").innerHTML = displayMs(simple.time());
 });
 
