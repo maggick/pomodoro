@@ -69,6 +69,7 @@ simple.on("poll", function (time) {
 // at the end of one timer we start a pomodoro or a pause depending of the step #TODO #FIXME
 simple.on("done", function(time){
   step = (step + 1)%8;
+  simple.stop();
   simple.reset();
   if (step % 2 == 0){
     simple.time(pomodoroTimer);
