@@ -76,9 +76,7 @@ simple.on("poll", function (time) {
 
 // at the end of one timer we start a pomodoro or a pause depending of the step #TODO #FIXME
 simple.on("done", function(time){
-  console.log("done");
-  step +=1;
-  console.log(step%2);
+  step = (step + 1)%8;
   simple.reset();
   if (step % 2 == 0){
     simple.time(pomodoroTimer);
@@ -87,6 +85,7 @@ simple.on("done", function(time){
     simple.time(shortBreakTimer);
   }
   document.getElementById("timer").innerHTML = displayMs(simple.time());
+  document.getElementById("step").innerHTML = step+"/8";
 });
 
 // display the ms timer in a human readable format "min:sec"
