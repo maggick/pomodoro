@@ -31,7 +31,7 @@ settingsEl.addEventListener('click', function () {
   ipc.send('open-settings-window');
 });
 
-// set all action button #FIXME
+// set all action button
 var actionButtons = document.querySelectorAll('.button-action');
 for (var i = 0; i < actionButtons.length; i++) {
   var actionButton = actionButtons[i];
@@ -39,7 +39,7 @@ for (var i = 0; i < actionButtons.length; i++) {
   prepareButton(actionButton, actionName);
 }
 
-// prepare each button #FIXME
+// prepare each button
 function prepareButton(buttonEl, actionName) {
   buttonEl.querySelector('span').style.backgroundImage = 'url("img/icons/' + actionName + '.png")';
 
@@ -49,19 +49,11 @@ function prepareButton(buttonEl, actionName) {
         simple.start();
       });
       break;
-    case 'pause':
-      buttonEl.addEventListener('click', function () {
-        simple.stop();
-      });
-      break;
     case 'stop':
       buttonEl.addEventListener('click', function () {
         simple.stop();
-      });
-      break;
-    case 'reset':
-      buttonEl.addEventListener('click', function () {
         simple.reset();
+        document.getElementById("timer").innerHTML = displayMs(simple.time());
       });
       break;
     default:
