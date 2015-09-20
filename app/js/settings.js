@@ -25,8 +25,11 @@ for (var i = 0; i < modifierCheckboxes.length; i++) {
 for (var i = 0; i < modifierTimers.length; i++) {
   var timers = configuration.readSettings('TimerDuration');
   var timerType = modifierTimers[i].attributes['id'].value;
-
   document.getElementById(timerType).value = timers[i];
+
+  modifierTimers[i].addEventListener('click', function (e) {
+    bindModifierTimers(e);
+  });
 }
 
 function bindModifierCheckboxes(e) {
@@ -43,4 +46,8 @@ function bindModifierCheckboxes(e) {
 
   configuration.saveSettings('shortcutKeys', shortcutKeys);
   ipc.send('set-global-shortcuts');
+}
+
+function bindModifierTimers(e) {
+  // TODO, the code pass here when clicking
 }
