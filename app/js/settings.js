@@ -26,7 +26,7 @@ for (var i = 0; i < modifierTimers.length; i++) {
   var timers = configuration.readSettings('TimerDuration');
   var timerType = modifierTimers[i].attributes['id'].value;
 
-  modifierTimers[i].innerHTML = timers.indexOf(timerType);
+  document.getElementById(timerType).value = timers[i];
 }
 
 function bindModifierCheckboxes(e) {
