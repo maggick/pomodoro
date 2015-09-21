@@ -49,5 +49,28 @@ function bindModifierCheckboxes(e) {
 }
 
 function bindModifierTimers(e) {
-  // TODO, the code pass here when clicking
+  var timers = configuration.readSettings('TimerDuration');
+  var modifierTimer = e.target.attributes['id'].value;
+
+  var index =-1;
+  switch(modifierTimer){
+    case 'pomodoroDuration':
+      index = 0;
+      break;
+    case 'shortBreakDuration':
+      index = 1;
+      break;
+    case 'longBreakDuration':
+      index = 2;
+      break;
+    default:
+      console.log('what2?')
+  }
+
+  if (index !== -1) {
+      timers[index] = document.getElementById(modifierTimer).value;
+  }
+  configuration.saveSettings('TimerDuration', timers);
+  // TODO, FIXME, the code will not be executed when modifying the values with
+  // keyboard
 }
