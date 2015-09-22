@@ -30,6 +30,9 @@ for (var i = 0; i < modifierTimers.length; i++) {
   modifierTimers[i].addEventListener('click', function (e) {
     bindModifierTimers(e);
   });
+  modifierTimers[i].addEventListener('keyup', function (e) {
+    bindModifierTimers(e);
+  });
 }
 
 function bindModifierCheckboxes(e) {
@@ -71,6 +74,4 @@ function bindModifierTimers(e) {
       timers[index] = document.getElementById(modifierTimer).value;
   }
   configuration.saveSettings('TimerDuration', timers);
-  // TODO, FIXME, the code will not be executed when modifying the values with
-  // keyboard
 }
