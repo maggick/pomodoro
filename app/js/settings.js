@@ -75,3 +75,14 @@ function bindModifierTimers(e) {
   }
   configuration.saveSettings('TimerDuration', timers);
 }
+
+// display the ms timer in a human readable format "min:sec"
+// TODO make on utils.js file
+function displayMs(time){
+  var m = Math.floor((time/60000));
+  var s = ((time % 60000)/1000).toFixed(0);
+  if (s === 60){
+    s = 0
+  }
+  return m + ":" + (s < 10 ? '0' : '') + s;
+}
