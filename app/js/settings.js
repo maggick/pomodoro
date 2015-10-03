@@ -2,76 +2,76 @@
 
 var ipc = require('ipc');
 
-  var closeEl = document.querySelector('.close');
-  closeEl.addEventListener('click', function (e) {
-    ipc.send('close-settings-window');
+var closeEl = document.querySelector('.close');
+closeEl.addEventListener('click', function (e) {
+  ipc.send('close-settings-window');
+});
+
+var configuration = require('../configuration');
+
+var modifierCheckboxes = document.querySelectorAll('.global-shortcut');
+var modifierTimers = document.querySelectorAll('.timer');
+
+for (var i = 0; i < modifierCheckboxes.length; i++) {
+  var shortcutKeys = configuration.readSettings('shortcutKeys');
+  var modifierKey = modifierCheckboxes[i].attributes['data-modifier-key'].value;
+  modifierCheckboxes[i].checked = shortcutKeys.indexOf(modifierKey) !== -1;
+
+  modifierCheckboxes[i].addEventListener('click', function (e) {
+    bindModifierCheckboxes(e);
   });
+}
 
-  var configuration = require('../configuration');
+for (var i = 0; i < modifierTimers.length; i++) {
+  var timers = configuration.readSettings('TimerDuration');
+  var timerType = modifierTimers[i].attributes['id'].value;
+  document.getElementById(timerType).value = timers[i];
 
-  var modifierCheckboxes = document.querySelectorAll('.global-shortcut');
-  var modifierTimers = document.querySelectorAll('.timer');
+  modifierTimers[i].addEventListener('click', function (e) {
+    bindModifierTimers(e);
+  });
+  modifierTimers[i].addEventListener('keyup', function (e) {
+    bindModifierTimers(e);
+  });
+}
 
-  for (var i = 0; i < modifierCheckboxes.length; i++) {
-    var shortcutKeys = configuration.readSettings('shortcutKeys');
-    var modifierKey = modifierCheckboxes[i].attributes['data-modifier-key'].value;
-    modifierCheckboxes[i].checked = shortcutKeys.indexOf(modifierKey) !== -1;
+function bindModifierCheckboxes(e) {
+  var shortcutKeys = configuration.readSettings('shortcutKeys');
+  var modifierKey = e.target.attributes['data-modifier-key'].value;
 
-    modifierCheckboxes[i].addEventListener('click', function (e) {
-      bindModifierCheckboxes(e);
-    });
+  if (shortcutKeys.indexOf(modifierKey) !== -1) {
+    var shortcutKeyIndex = shortcutKeys.indexOf(modifierKey);
+    shortcutKeys.splice(shortcutKeyIndex, 1);
+  }
+  else {
+    shortcutKeys.push(modifierKey);
   }
 
-  for (var i = 0; i < modifierTimers.length; i++) {
-    var timers = configuration.readSettings('TimerDuration');
-    var timerType = modifierTimers[i].attributes['id'].value;
-    document.getElementById(timerType).value = timers[i];
+  configuration.saveSettings('shortcutKeys', shortcutKeys);
+  ipc.send('set-global-shortcuts');
+}
 
-    modifierTimers[i].addEventListener('click', function (e) {
-      bindModifierTimers(e);
-    });
-    modifierTimers[i].addEventListener('keyup', function (e) {
-      bindModifierTimers(e);
-    });
+function bindModifierTimers(e) {
+  var timers = configuration.readSettings('TimerDuration');
+  var modifierTimer = e.target.attributes['id'].value;
+
+  var index =-1;
+  switch(modifierTimer){
+    case 'pomodoroDuration':
+      index = 0;
+      break;
+    case 'shortBreakDuration':
+      index = 1;
+      break;
+    case 'longBreakDuration':
+      index = 2;
+      break;
+    default:
+      console.log('what2?')
   }
 
-  function bindModifierCheckboxes(e) {
-    var shortcutKeys = configuration.readSettings('shortcutKeys');
-    var modifierKey = e.target.attributes['data-modifier-key'].value;
-
-    if (shortcutKeys.indexOf(modifierKey) !== -1) {
-      var shortcutKeyIndex = shortcutKeys.indexOf(modifierKey);
-      shortcutKeys.splice(shortcutKeyIndex, 1);
-    }
-    else {
-      shortcutKeys.push(modifierKey);
-    }
-
-    configuration.saveSettings('shortcutKeys', shortcutKeys);
-    ipc.send('set-global-shortcuts');
+  if (index !== -1) {
+    timers[index] = document.getElementById(modifierTimer).value;
   }
-
-  function bindModifierTimers(e) {
-    var timers = configuration.readSettings('TimerDuration');
-    var modifierTimer = e.target.attributes['id'].value;
-
-    var index =-1;
-    switch(modifierTimer){
-      case 'pomodoroDuration':
-        index = 0;
-        break;
-      case 'shortBreakDuration':
-        index = 1;
-        break;
-      case 'longBreakDuration':
-        index = 2;
-        break;
-      default:
-        console.log('what2?')
-    }
-
-    if (index !== -1) {
-        timers[index] = document.getElementById(modifierTimer).value;
-    }
-    configuration.saveSettings('TimerDuration', timers);
+  configuration.saveSettings('TimerDuration', timers);
 }
