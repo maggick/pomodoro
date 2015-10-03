@@ -25,7 +25,7 @@ for (var i = 0; i < modifierCheckboxes.length; i++) {
 for (var i = 0; i < modifierTimers.length; i++) {
   var timers = configuration.readSettings('TimerDuration');
   var timerType = modifierTimers[i].attributes['id'].value;
-  document.getElementById(timerType).value = timers[i];
+  document.getElementById(timerType).value = displayMsInMinute(timers[i]);
 
   modifierTimers[i].addEventListener('click', function (e) {
     bindModifierTimers(e);
@@ -71,18 +71,14 @@ function bindModifierTimers(e) {
   }
 
   if (index !== -1) {
-    timers[index] = document.getElementById(modifierTimer).value;
+    timers[index] = document.getElementById(modifierTimer).value * 60000;
   }
   configuration.saveSettings('TimerDuration', timers);
 }
 
-// display the ms timer in a human readable format "min:sec"
+// display the ms timer in minutes
 // TODO make on utils.js file
-function displayMs(time){
+function displayMsInMinute(time){
   var m = Math.floor((time/60000));
-  var s = ((time % 60000)/1000).toFixed(0);
-  if (s === 60){
-    s = 0
-  }
-  return m + ":" + (s < 10 ? '0' : '') + s;
+  return m;
 }
