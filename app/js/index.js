@@ -67,6 +67,7 @@ simple.on("poll", function (time) {
 });
 
 // at the end of one timer we start a pomodoro or a pause depending of the step #TODO #FIXME
+// FIXME step is advancing 2 by 2
 simple.on("done", function(time){
   step = (step + 1)%8;
   simple.stop();
