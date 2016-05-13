@@ -1,16 +1,21 @@
-var app = require('app');  // Module to control application life.
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
-var globalShortcut = require('global-shortcut');
-var ipc = require('ipc');
-var configuration = require('./configuration');
-var settingsWindow = null;
+const electron = require('electron');
+// Module to control application life.
+const app = electron.app;
+// Module to create native browser window.
+const BrowserWindow = electron.BrowserWindow;
+
+const globalShortcut = electron.globalShortcut;
+
+const ipc = electron.ipcMain;
+const configuration = require('./configuration');
+const settingsWindow = null;
 
 // Report crashes to our server.
-require('crash-reporter').start();
+//require('crash-reporter').start();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
-var mainWindow = null;
+let mainWindow;
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
@@ -63,7 +68,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 300, height: 300});
 
   // and load the index.html of the app.
-  mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/app/index.html')
 
   // Open the devtools.
   //mainWindow.openDevTools();
