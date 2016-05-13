@@ -14,7 +14,7 @@ var simple = nodeTimers.countdown({pollInterval: 1000, startTime: pomodoroTimer}
 // display the pomodoro duration
 document.getElementById("timer").innerHTML = displayMs(pomodoroTimer);
 
-var ipc = require('ipc');
+const ipc = require('electron').ipcMain;
 
 // variable to know at which step we currently are (from 0 to 7)
 var step = 0;
