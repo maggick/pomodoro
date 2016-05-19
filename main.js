@@ -1,12 +1,12 @@
 const electron = require('electron');
 // Module to control application life.
-const app = electron.app;
+const {app} = electron;
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
+const {BrowserWindow} = electron;
 
-const globalShortcut = electron.globalShortcut;
+const {globalShortcut} = electron;
 
-const ipc = electron.ipcMain;
+const {ipcMain} = electron;
 const configuration = require('./configuration');
 const settingsWindow = null;
 
@@ -24,7 +24,7 @@ app.on('window-all-closed', function() {
   }
 });
 
-ipc.on('open-settings-window', function () {
+ipcMain.on('open-settings-window', function () {
   if (settingsWindow) {
     return;
   }
@@ -43,13 +43,13 @@ ipc.on('open-settings-window', function () {
   });
 });
 
-ipc.on('close-settings-window', function () {
+ipcMain.on('close-settings-window', function () {
   if (settingsWindow) {
     settingsWindow.close();
   }
 });
 
-ipc.on('close-main-window', function () {
+ipcMain.on('close-main-window', function () {
   app.quit();
 });
 
