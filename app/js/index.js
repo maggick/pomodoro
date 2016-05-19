@@ -50,15 +50,17 @@ function prepareButton(buttonEl, actionName) {
   switch(actionName) {
     case 'start':
       buttonEl.addEventListener('click', function () {
-        console.log('start');
         if (step % 2 == 0){
+          timer_pomodoro.reset();
           timer_pomodoro.start();
         }
         else{
           if (step === 7){
+            timer_longBreak.reset();
             timer_longBreak.start();
           }
           else{
+            timer_shortBreak.reset();
             timer_shortBreak.start();
           }
         }
@@ -66,9 +68,23 @@ function prepareButton(buttonEl, actionName) {
       break;
     case 'stop':
       buttonEl.addEventListener('click', function () {
-        timer_pomodoro.stop();
-        timer_pomodoro.reset();
-        document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
+        if (step % 2 == 0){
+          timer_pomodoro.stop();
+          timer_pomodoro.reset();
+          document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
+        }
+        else{
+          if (step === 7){
+            timer_longBreak.stop();
+            timer_longBreak.reset();
+            document.getElementById("timer").innerHTML = displayMs(timer_longBreak.time());
+          }
+          else{
+            timer_shortBreak.stop();
+            timer_shortBreak.reset();
+            document.getElementById("timer").innerHTML = displayMs(timer_shortBreak.time());
+          }
+        }
       });
       break;
     default:
@@ -82,9 +98,9 @@ timer_pomodoro.on("poll", function (time) {
 });
 
 timer_pomodoro.on("done", function(time){
+  console.log('done');
   step = (step + 1)%8;
   timer_pomodoro.stop();
-  timer_pomodoro.reset();
   document.getElementById("timer").innerHTML = displayMs(shortBreakTimer);
   document.getElementById("step").innerHTML = step+"/8";
 });
@@ -97,7 +113,6 @@ timer_shortBreak.on("poll", function (time) {
 timer_shortBreak.on("done", function(time){
   step = (step + 1)%8;
   timer_shortBreak.stop();
-  timer_shortBreak.reset();
   document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
   document.getElementById("step").innerHTML = step+"/8";
 });
@@ -110,7 +125,6 @@ timer_longBreak.on("poll", function (time) {
 timer_longBreak.on("done", function(time){
   step = (step + 1)%8;
   timer_shortBreak.stop();
-  timer_shortBreak.reset();
   document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
   document.getElementById("step").innerHTML = step+"/8";
 });
