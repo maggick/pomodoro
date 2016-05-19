@@ -14,7 +14,7 @@ var simple = nodeTimers.countdown({pollInterval: 1000, startTime: pomodoroTimer}
 // display the pomodoro duration
 document.getElementById("timer").innerHTML = displayMs(pomodoroTimer);
 
-const ipc = require('electron').ipcMain;
+const {ipcRenderer} = require('electron');
 
 // variable to know at which step we currently are (from 0 to 7)
 var step = 0;
@@ -22,13 +22,13 @@ var step = 0;
 // let close the window with the close button
 var closeEl = document.querySelector('.close');
 closeEl.addEventListener('click', function () {
-  ipc.send('close-main-window');
+  ipcRenderer.send('close-main-window');
 });
 
 // the settings button open the settings window
 var settingsEl = document.querySelector('.settings');
 settingsEl.addEventListener('click', function () {
-  ipc.send('open-settings-window');
+  ipcRenderer.send('open-settings-window');
 });
 
 // set all action button
@@ -46,6 +46,7 @@ function prepareButton(buttonEl, actionName) {
   switch(actionName) {
     case 'start':
       buttonEl.addEventListener('click', function () {
+        console.log('start');
         simple.start();
       });
       break;
