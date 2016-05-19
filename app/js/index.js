@@ -5,11 +5,13 @@ var configuration = require('../configuration.js');
 var timerDurations = configuration.readSettings('TimerDuration');
 var pomodoroTimer = timerDurations[0];
 var shortBreakTimer = timerDurations[1];
-var longtBreakTimer = timerDurations[2];
+var longBreakTimer = timerDurations[2];
 
 // create the timer with the pomodoro duration
 var nodeTimers = require('node-timers');
-var simple = nodeTimers.countdown({pollInterval: 1000, startTime: pomodoroTimer});
+var timer_pomodoro = nodeTimers.countdown({pollInterval: 1000, startTime: pomodoroTimer});
+var timer_shortBreak = nodeTimers.countdown({pollInterval: 1000, startTime: shortBreakTimer});
+var timer_longBreak = nodeTimers.countdown({pollInterval: 1000, startTime: longBreakTimer});
 
 // display the pomodoro duration
 document.getElementById("timer").innerHTML = displayMs(pomodoroTimer);
@@ -17,6 +19,8 @@ document.getElementById("timer").innerHTML = displayMs(pomodoroTimer);
 const {ipcRenderer} = require('electron');
 
 // variable to know at which step we currently are (from 0 to 7)
+// even step => pomodor
+// odd => brek (7 => long break)
 var step = 0;
 
 // let close the window with the close button
@@ -47,14 +51,24 @@ function prepareButton(buttonEl, actionName) {
     case 'start':
       buttonEl.addEventListener('click', function () {
         console.log('start');
-        simple.start();
+        if (step % 2 == 0){
+          timer_pomodoro.start();
+        }
+        else{
+          if (step === 7){
+            timer_longBreak.start();
+          }
+          else{
+            timer_shortBreak.start();
+          }
+        }
       });
       break;
     case 'stop':
       buttonEl.addEventListener('click', function () {
-        simple.stop();
-        simple.reset();
-        document.getElementById("timer").innerHTML = displayMs(simple.time());
+        timer_pomodoro.stop();
+        timer_pomodoro.reset();
+        document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
       });
       break;
     default:
@@ -63,23 +77,41 @@ function prepareButton(buttonEl, actionName) {
 }
 
 // at each poll from the timer we display the remaining time
-simple.on("poll", function (time) {
-  document.getElementById("timer").innerHTML = displayMs(simple.time());
+timer_pomodoro.on("poll", function (time) {
+  document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
 });
 
-// at the end of one timer we start a pomodoro or a pause depending of the step #TODO #FIXME
-// FIXME step is advancing 2 by 2
-simple.on("done", function(time){
+timer_pomodoro.on("done", function(time){
   step = (step + 1)%8;
-  simple.stop();
-  simple.reset();
-  if (step % 2 == 0){
-    simple.time(pomodoroTimer);
-  }
-  else{
-    simple.time(shortBreakTimer);
-  }
-  document.getElementById("timer").innerHTML = displayMs(simple.time());
+  timer_pomodoro.stop();
+  timer_pomodoro.reset();
+  document.getElementById("timer").innerHTML = displayMs(shortBreakTimer);
+  document.getElementById("step").innerHTML = step+"/8";
+});
+
+// at each poll from the timer we display the remaining time
+timer_shortBreak.on("poll", function (time) {
+  document.getElementById("timer").innerHTML = displayMs(timer_shortBreak.time());
+});
+
+timer_shortBreak.on("done", function(time){
+  step = (step + 1)%8;
+  timer_shortBreak.stop();
+  timer_shortBreak.reset();
+  document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
+  document.getElementById("step").innerHTML = step+"/8";
+});
+
+// at each poll from the timer we display the remaining time
+timer_longBreak.on("poll", function (time) {
+  document.getElementById("timer").innerHTML = displayMs(timer_longBreak.time());
+});
+
+timer_longBreak.on("done", function(time){
+  step = (step + 1)%8;
+  timer_shortBreak.stop();
+  timer_shortBreak.reset();
+  document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
   document.getElementById("step").innerHTML = step+"/8";
 });
 
