@@ -8,7 +8,7 @@ const {globalShortcut} = electron;
 
 const {ipcMain} = electron;
 const configuration = require('./configuration');
-const settingsWindow = null;
+let settingsWindow = null;
 
 // Report crashes to our server.
 //require('crash-reporter').start();
