@@ -50,7 +50,7 @@ function prepareButton(buttonEl, actionName) {
   switch(actionName) {
     case 'start':
       buttonEl.addEventListener('click', function () {
-        if (step % 2 == 0){
+        if (step % 2 === 0){
           timer_pomodoro.reset();
           timer_pomodoro.start();
         }
@@ -68,7 +68,7 @@ function prepareButton(buttonEl, actionName) {
       break;
     case 'stop':
       buttonEl.addEventListener('click', function () {
-        if (step % 2 == 0){
+        if (step % 2 === 0){
           timer_pomodoro.stop();
           timer_pomodoro.reset();
           document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
