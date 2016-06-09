@@ -8,6 +8,7 @@ const {globalShortcut} = electron;
 
 const {ipcMain} = electron;
 const configuration = require('./configuration');
+
 let settingsWindow = null;
 
 // Report crashes to our server.
@@ -29,18 +30,13 @@ ipcMain.on('open-settings-window', function () {
     return;
   }
 
-  settingsWindow = new BrowserWindow({
-    frame: false,
-    height: 200,
-    resizable: false,
-    width: 200
-  });
-
-  settingsWindow.loadUrl('file://' + __dirname + '/app/settings.html');
-
-  settingsWindow.on('closed', function () {
+  settingsWindow = new BrowserWindow({width: 200, height: 200, show: false});
+  settingsWindow.on('closed', () => {
     settingsWindow = null;
   });
+
+  settingsWindow.loadURL('file://' + __dirname + '/app/settings.html');
+  settingsWindow.show();
 });
 
 ipcMain.on('close-settings-window', function () {
