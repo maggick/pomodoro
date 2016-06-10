@@ -74,6 +74,7 @@ function bindModifierTimers(e) {
     timers[index] = document.getElementById(modifierTimer).value * 60000;
   }
   configuration.saveSettings('TimerDuration', timers);
+  // FIXME update the timers duration for the current session
 }
 
 // display the ms timer in minutes
