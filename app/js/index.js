@@ -102,7 +102,7 @@ timer_pomodoro.on("done", function(time){
   step = (step + 1)%8;
   timer_pomodoro.stop();
   document.getElementById("timer").innerHTML = displayMs(shortBreakTimer);
-  document.getElementById("step").innerHTML = step+"/8";
+  displayStep(step);
 });
 
 // at each poll from the timer we display the remaining time
@@ -114,7 +114,7 @@ timer_shortBreak.on("done", function(time){
   step = (step + 1)%8;
   timer_shortBreak.stop();
   document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
-  document.getElementById("step").innerHTML = step+"/8";
+  displayStep(step);
 });
 
 // at each poll from the timer we display the remaining time
@@ -126,7 +126,7 @@ timer_longBreak.on("done", function(time){
   step = (step + 1)%8;
   timer_shortBreak.stop();
   document.getElementById("timer").innerHTML = displayMs(timer_pomodoro.time());
-  document.getElementById("step").innerHTML = step+"/8";
+  displayStep(step);
 });
 
 // display the ms timer in a human readable format "min:sec"
@@ -137,4 +137,35 @@ function displayMs(time){
     s = 0
   }
   return m + ":" + (s < 10 ? '0' : '') + s;
+}
+
+function displayStep(step){
+  switch (step){
+    case 0:
+      document.getElementById("step").innerHTML = "Pomodoro 1";
+      break;
+    case 1:
+      document.getElementById("step").innerHTML = "Short break";
+      break;
+    case 2:
+      document.getElementById("step").innerHTML = "Pomodoro 2";
+      break;
+    case 3:
+      document.getElementById("step").innerHTML = "Short break";
+      break;
+    case 4:
+      document.getElementById("step").innerHTML = "Pomodoro 3";
+      break;
+    case 5:
+      document.getElementById("step").innerHTML = "Short break";
+      break;
+    case 6:
+      document.getElementById("step").innerHTML = "Pomodoro 4";
+      break;
+    case 7:
+      document.getElementById("step").innerHTML = "Long break";
+      break;
+    default:
+      break;
+  }
 }
