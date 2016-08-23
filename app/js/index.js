@@ -87,6 +87,12 @@ function prepareButton(buttonEl, actionName) {
         }
       });
       break;
+    case 'reset':
+      buttonEl.addEventListener('click', function () {
+        step = 0;
+        displayStep(step);
+      });
+      break;
     default:
       console.log('what?');
   }
