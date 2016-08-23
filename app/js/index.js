@@ -20,7 +20,7 @@ const {ipcRenderer} = require('electron');
 
 // variable to know at which step we currently are (from 0 to 7)
 // even step => pomodor
-// odd => brek (7 => long break)
+// odd => break (7 => long break)
 var step = 0;
 
 // let close the window with the close button
